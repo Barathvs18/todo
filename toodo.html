@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> TODO</title>
+    <link rel="icon"href="images/icon.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="sub_body">
+
+    <form id="TasksForm">
+        <div class="todo_in">
+            <h1 class="heading">📋TODO</h1>
+            <p>Add Tasks To Your Work Space</p>
+            
+            <div class="input">
+                
+                <input type="text" id="Task" placeholder="Enter Task Here" required>
+            </div>
+            <div class="todo_btn">
+                <button onclick="window.location.href='index.html'">BACK</button>
+                <button type="submit">+ADD</button>
+                
+            </div>
+        </div>
+    </form>
+    <script>
+        document.getElementById("TasksForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from refreshing the page
+
+            // Get the input value
+            const task = document.getElementById("Task").value;
+
+            // Retrieve existing tasks or initialize an empty array
+            let tasks = JSON.parse(sessionStorage.getItem("Tasks")) || [];
+
+            // Add the new task
+            tasks.push(task);
+
+            // Store updated tasks in session storage
+            sessionStorage.setItem("Tasks", JSON.stringify(tasks));
+
+            // Redirect to the display page
+            window.location.href = "work_space.html";
+        });
+    </script>
+</body>
+
+
+</html>

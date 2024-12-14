@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TODO</title>
+    <link rel="icon"href="images/.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="text">
+        <h1>📋TODO WORK SPACE</h1>
+    </div>
+    <div class="list_out">
+        <div class="list_css">
+            <ul id="lists">
+        </div>
+        <div class="last_btn">
+            <button onclick="window.location.href='toodo.html'">+ADD</button>
+            <button onclick="window.location.href='index.html'">EXIT</button>
+        </div>
+
+    </div>
+    <script>
+        // Access the `ul` element where tasks will be displayed
+        var ul = document.getElementById("lists");
+    
+        // Retrieve the tasks array from session storage
+        var tasks = [];
+        try {
+            tasks = JSON.parse(sessionStorage.getItem("Tasks")) || [];
+        } catch (error) {
+            console.error("Error parsing tasks from sessionStorage:", error);
+        }
+    
+        // Function to render tasks
+        function renderTasks() {
+            ul.innerHTML = ""; // Clear the list
+    
+            if (tasks.length > 0) {
+                tasks.forEach(function (task, index) {
+                    var listItem = document.createElement("li");
+                    listItem.className = "task-item";
+    
+                    // Create task text and delete button
+                    var taskText = document.createElement("span");
+                    taskText.textContent = task;
+    
+                    var deleteButton = document.createElement("button");
+                    deleteButton.textContent = "🗸DONE";
+                    deleteButton.className = "del_btn";
+                    deleteButton.onclick = function () {
+                        deleteItem(index);
+                    };
+    
+                    // Append the text and button to the list item
+                    listItem.appendChild(taskText);
+                    listItem.appendChild(deleteButton);
+    
+                    ul.appendChild(listItem);
+                });
+            } else {
+                // Display message if no tasks are available
+                var noTasksMessage = document.createElement("li");
+                noTasksMessage.textContent = "No tasks available.";
+                ul.appendChild(noTasksMessage);
+            }
+        }
+    
+        // Function to delete a task
+        function deleteItem(index) {
+            tasks.splice(index, 1); // Remove task from array
+            sessionStorage.setItem("Tasks", JSON.stringify(tasks)); // Update session storage
+            renderTasks(); // Re-render the task list
+        }
+    
+        // Initial rendering of tasks
+        renderTasks();
+    </script>
+    
+</body>
+
+
+
+</html>
